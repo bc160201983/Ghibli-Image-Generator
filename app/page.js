@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 
 export default function GhibliGeneratorPage() {
     // State variables
@@ -191,7 +192,18 @@ export default function GhibliGeneratorPage() {
                         />
 
                         {selectedFile ? (
-                            <img src={originalImageUrl} alt="Original" className="preview-image" />
+                            <Image 
+                                src={originalImageUrl} 
+                                alt="Original" 
+                                className="preview-image" 
+                                width={400}
+                                height={400}
+                                style={{
+                                    maxWidth: '100%',
+                                    height: 'auto',
+                                    objectFit: 'contain'
+                                }}
+                            />
                         ) : (
                             <>
                                 <div className="icon-upload-cloud"></div>
@@ -282,31 +294,18 @@ export default function GhibliGeneratorPage() {
 
                         <div className="result-image-container">
                             {stylizedImageUrl ? (
-                                <>
-                                    <img src={stylizedImageUrl} alt="Generated Ghibli Image" className="preview-image" />
-                                    
-                                    {imageDescription && (
-                                        <div className="image-info mt-4">
-                                            <h3 className="text-sm font-semibold text-primary-dark mb-2">Image Description:</h3>
-                                            <p className="text-xs text-gray-700 bg-gray-50 p-3 rounded-md border border-gray-100">
-                                                {imageDescription}
-                                            </p>
-                                        </div>
-                                    )}
-                                    
-                                    {generationPrompt && (
-                                        <div className="image-info mt-3">
-                                            <details className="text-xs">
-                                                <summary className="text-sm font-semibold text-primary-dark cursor-pointer">
-                                                    View Generation Prompt
-                                                </summary>
-                                                <p className="text-xs text-gray-700 bg-gray-50 p-3 mt-2 rounded-md border border-gray-100">
-                                                    {generationPrompt}
-                                                </p>
-                                            </details>
-                                        </div>
-                                    )}
-                                </>
+                                <Image 
+                                    src={stylizedImageUrl} 
+                                    alt="Generated Ghibli Image" 
+                                    className="preview-image"
+                                    width={400}
+                                    height={400}
+                                    style={{
+                                        maxWidth: '100%',
+                                        height: 'auto',
+                                        objectFit: 'contain'
+                                    }}
+                                />
                             ) : !isLoading && !error && (
                                 <>
                                     <div className="icon-wand"></div>
@@ -316,6 +315,26 @@ export default function GhibliGeneratorPage() {
                                     </p>
                                 </>
                             )}
+                            {imageDescription && (
+                                <div className="image-info mt-4">
+                                    <h3 className="text-sm font-semibold text-primary-dark mb-2">Image Description:</h3>
+                                    <p className="text-xs text-gray-700 bg-gray-50 p-3 rounded-md border border-gray-100">
+                                        {imageDescription}
+                                    </p>
+                                </div>
+                            )}
+                            {generationPrompt && (
+                                <div className="image-info mt-3">
+                                    <details className="text-xs">
+                                        <summary className="text-sm font-semibold text-primary-dark cursor-pointer">
+                                            View Generation Prompt
+                                        </summary>
+                                        <p className="text-xs text-gray-700 bg-gray-50 p-3 mt-2 rounded-md border border-gray-100">
+                                            {generationPrompt}
+                                        </p>
+                                    </details>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -323,7 +342,7 @@ export default function GhibliGeneratorPage() {
 
             <footer className="footer">
                 <p>
-                    Created with <span className="text-red-500">♥</span> using Next.js and xAI's Grok API
+                    Created with <span className="text-red-500">♥</span> using Next.js and xAI&#39;s Grok API
                 </p>
                 <p className="text-xs mt-2">
                     <span className="tooltip">
