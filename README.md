@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ghibli Image Generator
 
-## Getting Started
+A web application that transforms your images into Studio Ghibli-inspired artwork using AI. This project leverages both xAI's Grok and OpenAI's DALL-E models to analyze uploaded images and generate beautiful Ghibli-style renditions.
 
-First, run the development server:
+![Ghibli Image Generator Screenshot](https://i.imgur.com/example.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Image Analysis**: Analyzes uploaded images to understand their content and composition
+- **Ghibli-Style Generation**: Transforms images into the iconic Studio Ghibli art style
+- **Multiple AI Models**: Choose between xAI's Grok or OpenAI's DALL-E for image generation
+- **Transparent Process**: View the AI's description of your image and the prompt used for generation
+- **Modern UI**: Beautiful, responsive interface with drag-and-drop functionality
+- **Real-time Feedback**: See the generation process with loading indicators and error handling
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## How It Works
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The application uses a two-step AI process:
 
-## Learn More
+1. **Image Analysis** (Grok only): When using the Grok model, your uploaded image is analyzed by the Grok Vision model to generate a detailed description of its content.
 
-To learn more about Next.js, take a look at the following resources:
+2. **Style Transfer**:
+   - **Grok**: Uses the image description to create a specialized prompt for the Grok image generation model, which creates a new image in Ghibli style based on your uploaded content.
+   - **DALL-E**: Uses OpenAI's image editing capabilities to directly apply Ghibli-style characteristics to your uploaded image.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Technologies Used
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Frontend**: Next.js, React, Tailwind CSS
+- **Backend**: Next.js API Routes
+- **AI APIs**: 
+  - xAI (Grok) for image analysis and generation
+  - OpenAI (DALL-E) for image editing
+- **Image Processing**: Sharp for image resizing and format conversion
 
-## Deploy on Vercel
+## Setup
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Prerequisites
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Node.js 18.x or later
+- npm or yarn
+- xAI API key (for Grok model)
+- OpenAI API key (for DALL-E model)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/ghibli-image-generator.git
+   cd ghibli-image-generator
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Create a `.env.local` file in the root directory with your API keys:
+   ```
+   XAI_API_KEY=your_xai_api_key_here
+   OPENAI_API_KEY=your_openai_api_key_here
+   ```
+
+4. Start the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to use the application.
+
+## Usage
+
+1. Upload an image by dragging and dropping or using the file browser
+2. Select your preferred AI model (Grok or DALL-E)
+3. Click "Generate Ghibli Image"
+4. View the generated image along with the description and prompt used (when using Grok)
+
+## API Reference
+
+### `/api/stylize` Endpoint
+
+**Request**:
+- Method: POST
+- Content-Type: multipart/form-data
+- Body:
+  - `image`: Image file
+  - `model`: "grok" or "openai"
+
+**Response**:
+- Status: 200 OK
+- Content-Type: application/json
+- Body:
+  - `url`: URL of the generated image
+  - `description`: Description of the uploaded image (Grok only)
+  - `prompt`: Prompt used for generation
+  - `model`: Model used for generation
+
+## Limitations
+
+- The Grok model has a maximum prompt length of 1024 characters
+- The DALL-E model requires images to be resized to 1024x1024 pixels
+- The application requires valid API keys for both services to offer full functionality
+
+## Future Improvements
+
+- Add more style options beyond Studio Ghibli
+- Implement image history to view and download past generations
+- Add user accounts to save favorite generations
+- Optimize for mobile devices
+- Add more customization options for the generation process
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgements
+
+- Studio Ghibli for their iconic art style that inspired this project
+- xAI and OpenAI for their powerful image generation APIs
+- Next.js team for the excellent framework
+
+---
+
+This project was bootstrapped with [Create Next App](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
